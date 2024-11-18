@@ -1,0 +1,53 @@
+th,
+td {
+  border: 1px solid black;
+  border-collapse: collapse;
+  padding: 6px;
+  text-align: center;
+}
+
+table {
+  border-collapse: collapse;
+  text-align: center;
+  width: 100%;
+}
+
+body {
+  padding-inline: 125px;
+}
+
+.lampiran {
+  text-align: end;
+  font-weight: 700;
+}
+
+h1 {
+  font-size: 18px;
+  text-align: center;
+}
+.table-content p {
+  font-weight: 700;
+}
+
+.kecamatan {
+  display: flex;
+}
+
+.desa {
+  margin-left: 685px;
+}
+
+.ttd {
+  text-align: center;
+  padding-top: 55px;
+}
+
+.ttd-1 {
+  display: flex;
+  justify-content: space-around;
+  padding-top: 55px;
+}
+
+.total {
+  font-weight: 700;
+}

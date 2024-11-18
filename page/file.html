@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="../style/app.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.1/xlsx.full.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.6.0/jspdf.umd.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.js"></script>
+    <style>
+      @page {
+        margin: 20mm; /* Tentukan margin */
+        size: "[216, 356]" landscape; /* Menentukan ukuran kertas A4 landscape */
+      }
+    </style>
+  </head>
+  <body>
+    <button id="convertPDF">Export ke PDF</button>
+    <button id="exportBtn">Export ke Excel</button>
+
+    <div id="template">
+      <div class="lampiran">
+        <p>LAMPIRAN LAPORAN HASIL PEMERIKSAAN</p>
+        <p>NOMOR : 900.1.13.1/S-24./PBB-P2/424.102/2024</p>
+        <p>TANGGAL : 0</p>
+      </div>
+
+      <h1>PERUBAHAN DATA SUBJEK/OBJEK PAJAK</h1>
+      <div class="table-content">
+        <div class="kecamatan">
+          <p>KECAMATAN :</p>
+          <p class="desa">DESA/KELURAHAN :</p>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th colspan="7">DATA LAMA</th>
+              <th colspan="7">DATA BARU</th>
+              <th rowspan="3">KETERANGAN</th>
+            </tr>
+            <tr>
+              <th rowspan="2">NO</th>
+              <th rowspan="2">NOP</th>
+              <th rowspan="2">NAMA</th>
+              <th colspan="2">BUMI</th>
+              <th colspan="2">BANGUNAN</th>
+              <th rowspan="2">NO</th>
+              <th rowspan="2">NOP</th>
+              <th rowspan="2">NAMA</th>
+              <th colspan="2">BUMI</th>
+              <th colspan="2">BANGUNAN</th>
+            </tr>
+            <tr>
+              <th>LUAS</th>
+              <th>ZNT</th>
+              <th>LUAS</th>
+              <th>KLAS</th>
+              <th>LUAS</th>
+              <th>ZNT</th>
+              <th>LUAS</th>
+              <th>KLAS</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td></td>
+              <td colspan="2">TOTAL</td>
+              <td>0</td>
+              <td></td>
+              <td>0</td>
+              <td></td>
+              <td></td>
+              <td colspan="2">TOTAL</td>
+              <td>0</td>
+              <td></td>
+              <td>0</td>
+              <td></td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="kecamatan">
+          <p>KECAMATAN :</p>
+          <p class="desa">DESA/KELURAHAN :</p>
+        </div>
+        <table>
+          <tr>
+            <th colspan="7">DATA LAMA</th>
+            <th colspan="7">DATA BARU</th>
+            <th rowspan="3">KETERANGAN</th>
+          </tr>
+          <tr>
+            <th rowspan="2">NO</th>
+            <th rowspan="2">NOP</th>
+            <th rowspan="2">NAMA</th>
+            <th colspan="2">BUMI</th>
+            <th colspan="2">BANGUNAN</th>
+            <th rowspan="2">NO</th>
+            <th rowspan="2">NOP</th>
+            <th rowspan="2">NAMA</th>
+            <th colspan="2">BUMI</th>
+            <th colspan="2">BANGUNAN</th>
+          </tr>
+          <tr>
+            <th>LUAS</th>
+            <th>ZNT</th>
+            <th>LUAS</th>
+            <th>KLAS</th>
+            <th>LUAS</th>
+            <th>ZNT</th>
+            <th>LUAS</th>
+            <th>KLAS</th>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td colspan="2" class="total">TOTAL</td>
+            <td>0</td>
+            <td></td>
+            <td>0</td>
+            <td></td>
+            <td></td>
+            <td colspan="2" class="total">TOTAL</td>
+            <td>0</td>
+            <td></td>
+            <td>0</td>
+            <td></td>
+            <td></td>
+          </tr>
+        </table>
+      </div>
+      <div class="ttd">
+        <p>Petugas Peneliti</p>
+        <br /><br /><br />
+        <u>Mochamad Grisvian Gema Elvitra, A. Md. A. Pjk.</u>
+        <p>NIP. 20000130 202201 1 003</p>
+        <div class="ttd-1">
+          <div>
+            <p>Diperiksa Oleh,</p>
+            <p>Kasubbid Pendaftaran dan Pendataan</p>
+            <br /><br /><br />
+            <u>Muhammad Khoriri, SE</u>
+            <p>Penata Tingkat I (III/d)</p>
+            <p>NIP. 19681012 199003 1 010</p>
+          </div>
+
+          <div>
+            <p>Diperiksa Oleh,</p>
+            <p>Kasubbid Perhitungan dan Penetapan</p>
+            <br /><br /><br />
+            <u>Sanca Dwi Anggoro, S.Kom, MM</u>
+            <p>Penata (III/C)</p>
+            <p>NIP. 19851214 201001 1 009</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- <script src="https://cdn.jsdelivr.net/npm/html2xlsx@0.8.0/html2xlsx.bundle.js"></script> -->
+
+    <script>
+      document
+        .getElementById("convertPDF")
+        .addEventListener("click", function () {
+          const element = document.getElementById("template");
+          html2pdf(element, {
+            margin: 20,
+            filename: "laporan_pajak.pdf",
+            image: { type: "jpeg", quality: 0.98 },
+            html2canvas: { scale: 2 },
+            jsPDF: {
+              unit: "mm",
+              format: [216, 356],
+              orientation: "landscape",
+            },
+          });
+        });
+      // document
+      //   .getElementById("exportBtn")
+      //   .addEventListener("click", function () {
+      //     const wb = XLSX.utils.book_new();
+      //     const htmlContent = document.getElementById("template");
+      //     let data = [];
+      //     const headings = document.querySelectorAll("#template h1");
+      //     headings.forEach((h) => {
+      //       data.push(["Heading", h.textContent]);
+      //     });
+
+      //     const paragraphs = document.querySelectorAll("#template p");
+      //     paragraphs.forEach((p) => {
+      //       data.push(["Paragraph", p.textContent]);
+      //     });
+
+      //     const tables = document.querySelectorAll("#template table");
+      //     tables.forEach((table) => {
+      //       const tableData = [];
+      //       table.querySelectorAll("tr").forEach((row) => {
+      //         const rowData = [];
+      //         row.querySelectorAll("th, td").forEach((cell) => {
+      //           rowData.push(cell.textContent);
+      //         });
+      //         tableData.push(rowData);
+      //       });
+      //       tableData.forEach((row) => {
+      //         data.push(row);
+      //       });
+      //     });
+
+      //     const ws = XLSX.utils.aoa_to_sheet(data);
+      //     XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+      //     XLSX.writeFile(wb, "template.xlsx");
+      //   });
+    </script>
+  </body>
+</html>
