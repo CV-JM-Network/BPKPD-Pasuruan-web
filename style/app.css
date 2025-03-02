@@ -31,10 +31,12 @@ h1 {
 
 .kecamatan {
   display: flex;
+  /* justify-content: space-between; */
 }
 
-.desa {
-  margin-left: 685px;
+#desa {
+  flex-grow: 1; /* Mengisi ruang yang tersisa */
+  text-align: right;
 }
 
 .ttd {
