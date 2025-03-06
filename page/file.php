@@ -100,7 +100,7 @@
         const urlParams = new URLSearchParams(window.location.search);
         // const idMutasi = urlParams.get("idmutasi_pbb"); // Ambil ID dari parameter URL
 
-        const idMutasi = 4;
+        const idMutasi = 1;
 
         if (idMutasi) {
           fetch(
@@ -196,7 +196,7 @@
                 <td>${nomorUrut++}</td>
                 <td>${formatNOP(nop.nop.trim())}</td>
                 <td>${nop.nama.trim()}</td>
-                <td>${nop.lbumi  }</td>
+                <td>${nop.lbumi}</td>
                 <td>${nop.znt}</td>
                 <td>${nop.lbng}</td>
                 <td>${nop.sjpt}</td>
@@ -225,36 +225,38 @@
               totalLuasBangunan += totalBangunan;
             } else {
               // Mutasi Pemecahan
-              const row = tableBody.insertRow();
+              nopBaruList.forEach((nop, nopIndex) => {
+                const row = tableBody.insertRow();
               row.innerHTML = `
-            <td>${nomorUrut++}</td>
-            <td>${formatNOP(nopList[0].nop.trim())}</td>
-            <td>${nopList[0].nama.trim()}</td>
-            <td>${nopList[0].lbumi}</td>
-            <td>${nopList[0].znt}</td>
-            <td>${nopList[0].lbng}</td>
-            <td>${nopList[0].sjpt}</td>
-            <td>${nomorUrut1++}</td>
-            <td>${nopBaruList
-              .map((item) => formatNOP(item.nop_baru.trim()))
-              .join("<br>")}</td>
-            <td>${nopBaruList
-              .map((item) => item.nama_baru.trim())
-              .join("<br>")}</td>
-            <td>${nopBaruList
-              .map((item) => item.lbumi.trim())
-              .join("<br>")}</td>
-            <td>${nopBaruList
-              .map((item) => item.znt.trim())
-              .join("<br>")}</td>
-            <td>${nopBaruList
-              .map((item) => item.lbng.trim())
-              .join("<br>")}</td>
-            <td>${nopBaruList
-              .map((item) => item.sjpt.trim())
-              .join("<br>")}</td>
-            <td>${mutasi.keterangan.trim()}</td>
-        `;
+        ${
+            nopIndex === 0
+                ? `
+                    <td rowspan="${nopBaruList.length}">${nomorUrut}</td>
+                    <td rowspan="${nopBaruList.length}">${formatNOP(nopList[0].nop.trim())}</td>
+                    <td rowspan="${nopBaruList.length}">${nopList[0].nama.trim()}</td>
+                    <td rowspan="${nopBaruList.length}">${nopList[0].lbumi}</td>
+                    <td rowspan="${nopBaruList.length}">${nopList[0].znt}</td>
+                    <td rowspan="${nopBaruList.length}">${nopList[0].lbng}</td>
+                    <td rowspan="${nopBaruList.length}">${nopList[0].sjpt}</td>
+                `
+                : `
+                `
+        }
+        <td>${nomorUrut1++}</td>
+        <td>${formatNOP(nop.nop_baru.trim())}</td>
+        <td>${nop.nama_baru.trim()}</td>
+        <td>${nop.lbumi}</td>
+        <td>${nop.znt}</td>
+        <td>${nop.lbng}</td>
+        <td>${nop.sjpt}</td>
+        ${
+            nopIndex === 0
+                ? `<td rowspan="${nopBaruList.length}">${mutasi.keterangan.trim()}</td>`
+                : ``
+        }
+    `;
+              });
+              
               console.log(nopBaruList[0].nop_baru);
 
               totalLuasBumi += parseInt(nopList[0].lbumi) || 0;
