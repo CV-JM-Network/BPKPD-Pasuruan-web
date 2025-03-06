@@ -100,7 +100,7 @@
         const urlParams = new URLSearchParams(window.location.search);
         // const idMutasi = urlParams.get("idmutasi_pbb"); // Ambil ID dari parameter URL
 
-        const idMutasi = 1;
+        const idMutasi = 4;
 
         if (idMutasi) {
           fetch(
@@ -170,22 +170,24 @@
             const nopDisplay = nopList.join("<br>");
             const nopBaruDisplay = nopBaruList.join("<br>");
 
+            let totalLuas = 0;
+              let totalBangunan = 0;
+              let totalLuasBaru = 0;
+              let totalBangunanBaru = 0;
+
             if (mutasi.pemecahan_penyatuan === "penyatuan") {
               // Mutasi Penyatuan
               // const detailBaru = JSON.parse(daftarNop[0].detail); // Ambil detail dari daftar NOP pertama
-              let totalLuas = 0;
-              let totalBangunan = 0;
-
-              nopList.forEach((nop) => {
-                // const detailLama = JSON.parse(daftarNop[nopIndex].detail);
-                totalLuas += parseInt(nop.lbumi);
-                totalBangunan += parseInt(nop.lbng) || 0;
+              
+              nopBaruList.forEach((nopBaru) => {
+                totalLuasBaru += parseInt(nopBaru.lbumi);
+                totalBangunanBaru += parseInt(nopBaru.lbng) || 0;
               });
 
-              totalLuasBumi1 += totalLuas;
-              totalLuasBangunan1 += totalBangunan;
+              totalLuasBumiBaru += totalLuasBaru;
+              totalLuasBangunanBaru += totalBangunanBaru;
 
-              nopList.forEach((nop) => {
+              nopList.forEach((nop, nopIndex) => {
                 totalLuas += parseInt(nop.lbumi);
                 totalBangunan += parseInt(nop.lbng) || 0;
 
@@ -194,7 +196,7 @@
                 <td>${nomorUrut++}</td>
                 <td>${formatNOP(nop.nop.trim())}</td>
                 <td>${nop.nama.trim()}</td>
-                <td>${nop.lbumi}</td>
+                <td>${nop.lbumi  }</td>
                 <td>${nop.znt}</td>
                 <td>${nop.lbng}</td>
                 <td>${nop.sjpt}</td>
@@ -208,9 +210,9 @@
                 <td rowspan="${nopList.length}">${nopBaruList
                         .map((item) => item.nama_baru.trim())
                         .join("<br>")}</td>
-                <td rowspan="${nopList.length}">${totalLuasBumi1}</td>
+                <td rowspan="${nopList.length}">${nopBaruList[0].lbumi}</td>
                 <td rowspan="${nopList.length}">${nopBaruList[0].znt}</td>
-                <td rowspan="${nopList.length}">${totalLuasBangunan1}</td>
+                <td rowspan="${nopList.length}">${nopBaruList[0].lbng}</td>
                 <td rowspan="${nopList.length}">${nopBaruList[0].sjpt}</td>
                 <td rowspan="${nopList.length}">${mutasi.keterangan.trim()}</td>
             `
@@ -239,10 +241,18 @@
             <td>${nopBaruList
               .map((item) => item.nama_baru.trim())
               .join("<br>")}</td>
-            <td>${nopBaruList[0].lbumi}</td>
-            <td>${nopBaruList[0].znt}</td>
-            <td>${nopBaruList[0].lbng}</td>
-            <td>${nopBaruList[0].sjpt}</td>
+            <td>${nopBaruList
+              .map((item) => item.lbumi.trim())
+              .join("<br>")}</td>
+            <td>${nopBaruList
+              .map((item) => item.znt.trim())
+              .join("<br>")}</td>
+            <td>${nopBaruList
+              .map((item) => item.lbng.trim())
+              .join("<br>")}</td>
+            <td>${nopBaruList
+              .map((item) => item.sjpt.trim())
+              .join("<br>")}</td>
             <td>${mutasi.keterangan.trim()}</td>
         `;
               console.log(nopBaruList[0].nop_baru);
@@ -250,8 +260,13 @@
               totalLuasBumi += parseInt(nopList[0].lbumi) || 0;
               totalLuasBangunan += parseInt(nopList[0].lbng) || 0;
 
-              totalLuasBumiBaru += parseInt(nopBaruList[0].lbumi) || 0;
-              totalLuasBangunanBaru += parseInt(nopBaruList[0].lbng) || 0;
+              nopBaruList.forEach((nopBaru) => {
+                totalLuasBaru += parseInt(nopBaru.lbumi);
+                totalBangunanBaru += parseInt(nopBaru.lbng) || 0;
+              });
+
+              totalLuasBumiBaru += totalLuasBaru;
+              totalLuasBangunanBaru += totalBangunanBaru;
             }
           });
           const totalRow = tableBody.insertRow();
