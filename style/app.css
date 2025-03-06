@@ -9,6 +9,7 @@ td {
 table {
   border-collapse: collapse;
   text-align: center;
+  /* table-layout: fixed; */
   width: 100%;
 }
 
@@ -53,3 +54,12 @@ h1 {
 .total {
   font-weight: 700;
 }
+
+/* .keterangan {
+  width: 250px;
+  background-color: aqua;
+}
+.nop {
+  width: 200px;
+  background-color: aqua;
+} */

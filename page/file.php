@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Document LHP</title>
     <link rel="stylesheet" href="../style/app.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.1/xlsx.full.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
@@ -467,24 +467,6 @@
 
             // Tambahkan data ke worksheet exceljs
             excelWorksheet.addRows(excelData);
-
-            // excelWorksheet.eachRow((row, rowNumber) => {
-            //   if (rowNumber > 1) {
-            //     // Mulai dari baris kedua (data)
-            //     const nopCell = row.getCell(2); // Kolom NOP
-            //     const nopBaruCell = row.getCell(9); // Kolom NOP baru
-
-            //     if (nopCell.value) {
-            //       nopCell.value = formatNOP(nopCell.value);
-            //       nopCell.numFmt = "00.000.000.000-0000-000"; // Format kustom
-            //     }
-
-            //     if (nopBaruCell.value) {
-            //       nopBaruCell.value = formatNOP(nopBaruCell.value);
-            //       nopBaruCell.numFmt = "00.000.000.000-0000-000"; // Format kustom
-            //     }
-            //   }
-            // });
 
             const petugasPeneliti =
               document.getElementById("petugas_peneliti").textContent;
