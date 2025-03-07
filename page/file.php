@@ -100,7 +100,7 @@
         const urlParams = new URLSearchParams(window.location.search);
         // const idMutasi = urlParams.get("idmutasi_pbb"); // Ambil ID dari parameter URL
 
-        const idMutasi = 2;
+        const idMutasi = 3;
 
         if (idMutasi) {
           fetch(
@@ -612,19 +612,19 @@ tables.forEach((table) => {
             excelWorksheet.mergeCells("H9:N9");
             excelWorksheet.mergeCells("O9:O11");
             excelWorksheet.mergeCells("H7:J7");
-            excelWorksheet.mergeCells("F17:H17");
-            excelWorksheet.mergeCells("F21:H21");
-            excelWorksheet.mergeCells("F22:H22");
-            excelWorksheet.mergeCells("C26:E26");
-            excelWorksheet.mergeCells("C27:E27");
-            excelWorksheet.mergeCells("C31:E31");
-            excelWorksheet.mergeCells("C32:E32");
-            excelWorksheet.mergeCells("C33:E33");
-            excelWorksheet.mergeCells("I26:J26");
-            excelWorksheet.mergeCells("I27:J27");
-            excelWorksheet.mergeCells("I31:J31");
-            excelWorksheet.mergeCells("I32:J32");
-            excelWorksheet.mergeCells("I33:J33");
+            // excelWorksheet.mergeCells("F17:H17");
+            // excelWorksheet.mergeCells("F21:H21");
+            // excelWorksheet.mergeCells("F22:H22");
+            // excelWorksheet.mergeCells("C26:E26");
+            // excelWorksheet.mergeCells("C27:E27");
+            // excelWorksheet.mergeCells("C31:E31");
+            // excelWorksheet.mergeCells("C32:E32");
+            // excelWorksheet.mergeCells("C33:E33");
+            // excelWorksheet.mergeCells("I26:J26");
+            // excelWorksheet.mergeCells("I27:J27");
+            // excelWorksheet.mergeCells("I31:J31");
+            // excelWorksheet.mergeCells("I32:J32");
+            // excelWorksheet.mergeCells("I33:J33");
 
             excelWorksheet.getColumn("A").width = 5;
             excelWorksheet.getColumn("B").width = 30;
@@ -632,6 +632,28 @@ tables.forEach((table) => {
             excelWorksheet.getColumn("I").width = 30;
             excelWorksheet.getColumn("J").width = 20;
             excelWorksheet.getColumn("O").width = 30;
+
+              const mergeRanges = [
+                  { startRow: 17, startCol: "F", endCol: "H", numRows: 20 }, // F17:H26
+                  { startRow: 26, startCol: "C", endCol: "E", numRows: 20 }, // C26:E33
+                  { startRow: 26, startCol: "I", endCol: "J", numRows: 20 }, // I26:J33
+              ];
+
+              function colToInt(col) {
+                  let num = 0;
+                  for (let i = 0; i < col.length; i++) {
+                      num = num * 26 + (col.charCodeAt(i) - "A".charCodeAt(0) + 1);
+                  }
+                  return num;
+              }
+
+              mergeRanges.forEach((range) => {
+                  const startColNum = colToInt(range.startCol);
+                  const endColNum = colToInt(range.endCol);
+                  for (let i = 0; i < range.numRows; i++) {
+                      excelWorksheet.mergeCells(range.startCol + (range.startRow + i) + ":" + range.endCol + (range.startRow + i));
+                  }
+              });
 
             let totalLBRowIndex = 0;
             for (let i = 0; i < data.length; i++) {
