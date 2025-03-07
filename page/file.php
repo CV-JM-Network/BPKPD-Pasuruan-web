@@ -626,7 +626,7 @@ tables.forEach((table) => {
             // excelWorksheet.mergeCells("I32:J32");
             // excelWorksheet.mergeCells("I33:J33");
 
-            excelWorksheet.getColumn("A").width = 5;
+            excelWorksheet.getColumn("A").width = 7;
             excelWorksheet.getColumn("B").width = 30;
             excelWorksheet.getColumn("C").width = 20;
             excelWorksheet.getColumn("I").width = 30;
