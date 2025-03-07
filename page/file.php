@@ -100,7 +100,7 @@
         const urlParams = new URLSearchParams(window.location.search);
         // const idMutasi = urlParams.get("idmutasi_pbb"); // Ambil ID dari parameter URL
 
-        const idMutasi = 1;
+        const idMutasi = 2;
 
         if (idMutasi) {
           fetch(
@@ -242,13 +242,13 @@
                 : `
                 `
         }
-        <td>${nomorUrut1++}</td>
-        <td>${formatNOP(nop.nop_baru.trim())}</td>
-        <td>${nop.nama_baru.trim()}</td>
-        <td>${nop.lbumi}</td>
-        <td>${nop.znt}</td>
-        <td>${nop.lbng}</td>
-        <td>${nop.sjpt}</td>
+        <td class="data-baru">${nomorUrut1++}</td>
+<td class="data-baru">${formatNOP(nop.nop_baru.trim())}</td>
+<td class="data-baru">${nop.nama_baru.trim()}</td>
+<td class="data-baru">${nop.lbumi}</td>
+<td class="data-baru">${nop.znt}</td>
+<td class="data-baru">${nop.lbng}</td>
+<td class="data-baru">${nop.sjpt}</td>
         ${
             nopIndex === 0
                 ? `<td rowspan="${nopBaruList.length}">${mutasi.keterangan.trim()}</td>`
@@ -376,7 +376,11 @@
 
             addEmptyRows(1);
 
-            addEmptyRows(1); // Tambahkan baris kosong
+            const jenisMutasi = htmlContent.querySelectorAll("h3");
+            jenisMutasi.forEach((h) => {
+              data.push([h.textContent]);
+              rowIndex++;
+            });
 
             // Ambil div kecamatan
             const kecamatans = htmlContent.querySelectorAll(".kecamatan");
@@ -428,50 +432,101 @@
 
             // Ambil tabel (<table>)
             const tables = htmlContent.querySelectorAll("table");
-            tables.forEach((table) => {
-              table.querySelectorAll("tr").forEach((row) => {
-                const rowData = [];
-                let colIndex = 0;
-                row.querySelectorAll("th, td").forEach((cell) => {
-                  rowData.push(cell.textContent);
-                  colIndex++;
-                  if (cell.id == "klas1") {
-                    for (let i = 1; i < 4; i++) {
-                      rowData.push("");
-                    }
-                  }
-                  if (cell.id == "data_lama" || cell.id == "data_baru") {
-                    for (let i = 1; i < 7; i++) {
-                      rowData.push("");
-                    }
-                  }
-                  if (cell.id == "totalLB") {
-                    for (let i = 1; i < 3; i++) {
-                      rowData.push("");
-                    }
-                  }
-                  if (cell.id == "kolom_luas") {
-                    for (let i = 1; i < 2; i++) {
-                      rowData.push("LUAS");
-                      rowData.push("ZNT");
-                      rowData.push("LUAS");
-                    }
-                  }
+tables.forEach((table) => {
+    let row11, row12;
+    table.querySelectorAll("tr").forEach((row, rowIndex) => {
+        const rowData = [];
+        let colIndex = 0;
+        let adaDataBaru = row.querySelector(".data-baru") !== null;
 
-                  if (
-                    cell.id == "kolom_bumi1" ||
-                    cell.id == "kolom_bang1" ||
-                    cell.id == "kolom_bumi2" ||
-                    cell.id == "kolom_bang2"
-                  ) {
+        row.querySelectorAll("th, td").forEach((cell) => {
+            rowData.push(cell.textContent);
+            colIndex++;
+            if (cell.id == "klas1") {
+                for (let i = 1; i < 4; i++) {
                     rowData.push("");
-                    colIndex++;
-                  }
+                }
+            }
+            if (cell.id == "data_lama" || cell.id == "data_baru") {
+                for (let i = 1; i < 7; i++) {
+                    rowData.push("");
+                }
+            }
+            if (cell.id == "totalLB") {
+                for (let i = 1; i < 3; i++) {
+                    rowData.push("");
+                }
+            }
+            if (cell.id == "kolom_luas") {
+                for (let i = 1; i < 2; i++) {
+                    rowData.push("LUAS");
+                    rowData.push("ZNT");
+                    rowData.push("LUAS");
+                }
+            }
+
+            if (
+                cell.id == "kolom_bumi1" ||
+                cell.id == "kolom_bang1" ||
+                cell.id == "kolom_bumi2" ||
+                cell.id == "kolom_bang2"
+            ) {
+                rowData.push("");
+                colIndex++;
+            }
+        });
+
+        if (adaDataBaru) {
+            const dataBaruCells = row.querySelectorAll(".data-baru");
+            if (dataBaruCells.length > 0) {
+                let newColIndex = 7;
+                while (rowData.length < 7) {
+                    rowData.push("");
+                }
+                dataBaruCells.forEach((cell) => {
+                    rowData[newColIndex] = cell.textContent;
+                    console.log("Data Baru:", cell.textContent);
+                    rowData[newColIndex] = cell.textContent;
+                    newColIndex++;
                 });
-                data.push(rowData);
-                rowIndex++;
-              });
-            });
+                let dataBaruDihapus = false;
+                for (let i = 0; i < 7; i++) {
+                    const cell = row.querySelector(`td:nth-child(${i + 1})`);
+                    if (cell && cell.classList.contains("data-baru")) {
+                        rowData[i] = "";
+                        dataBaruDihapus = true;
+                    }
+                }
+                console.log("dataBaruDihapus:", dataBaruDihapus);
+                console.log("rowIndex:", rowIndex);
+                if (dataBaruDihapus && rowIndex === 4) { // Modifikasi kondisi agar sesuai dengan indeks baris
+                    // Simpan baris ke-11 dan ke-12
+                    if (rowIndex === 11) {
+                        row11 = row;
+                    } else if (rowIndex === 12) {
+                        row12 = row;
+                    }
+                }
+            }
+        }
+
+        data.push(rowData);
+    });
+
+    // Merge sel A12 dengan sel di bawahnya
+    if (row11 && row12) {
+        const cellA12 = row11.querySelector("td:first-child");
+        const cellA13 = row12.querySelector("td:first-child");
+        console.log("cellA12:", cellA12);
+        console.log("cellA13:", cellA13);
+        if (cellA12 && cellA13) {
+            cellA12.rowSpan = 2;
+            cellA13.remove();
+        } else {
+            console.log("Sel A12 atau A13 tidak ditemukan.");
+        }
+    }
+});
 
             const ws = XLSX.utils.aoa_to_sheet(data);
             ws["!merges"] = merges;
@@ -540,6 +595,7 @@
             excelWorksheet.mergeCells("M2:O2");
             excelWorksheet.mergeCells("M3:O3");
             excelWorksheet.mergeCells("A4:O4");
+            excelWorksheet.mergeCells("A6:C6");
             excelWorksheet.mergeCells("A7:C7");
             excelWorksheet.mergeCells("Q12:T12");
             excelWorksheet.mergeCells("A10:A11");
@@ -555,22 +611,20 @@
             excelWorksheet.mergeCells("A9:G9");
             excelWorksheet.mergeCells("H9:N9");
             excelWorksheet.mergeCells("O9:O11");
-            excelWorksheet.mergeCells("A13:C13");
-            excelWorksheet.mergeCells("H13:J13");
             excelWorksheet.mergeCells("H7:J7");
-            excelWorksheet.mergeCells("F16:H16");
-            excelWorksheet.mergeCells("F20:H20");
+            excelWorksheet.mergeCells("F17:H17");
             excelWorksheet.mergeCells("F21:H21");
-            excelWorksheet.mergeCells("C25:E25");
+            excelWorksheet.mergeCells("F22:H22");
             excelWorksheet.mergeCells("C26:E26");
-            excelWorksheet.mergeCells("C30:E30");
+            excelWorksheet.mergeCells("C27:E27");
             excelWorksheet.mergeCells("C31:E31");
             excelWorksheet.mergeCells("C32:E32");
-            excelWorksheet.mergeCells("I25:J25");
+            excelWorksheet.mergeCells("C33:E33");
             excelWorksheet.mergeCells("I26:J26");
-            excelWorksheet.mergeCells("I30:J30");
+            excelWorksheet.mergeCells("I27:J27");
             excelWorksheet.mergeCells("I31:J31");
             excelWorksheet.mergeCells("I32:J32");
+            excelWorksheet.mergeCells("I33:J33");
 
             excelWorksheet.getColumn("A").width = 5;
             excelWorksheet.getColumn("B").width = 30;
@@ -646,12 +700,18 @@
         `;
           element.appendChild(style);
 
-          html2canvas(element, { scale: 2 }).then(function (canvas) {
+          html2canvas(element, { scale: 2,
+    onclone: function(clonedDoc) {
+        const content = clonedDoc.querySelector('#template');
+        content.style.paddingLeft = '20px';
+        content.style.paddingRight = '20px';
+        content.style.paddingTop = '20px';
+    }}).then(function (canvas) {
             const imgData = canvas.toDataURL("image/png");
             const pdf = new jspdf.jsPDF({
               orientation: "landscape",
               unit: "mm",
-              format: "a4", // Menggunakan format A4
+              format: "a4", 
             });
             const imgProps = pdf.getImageProperties(imgData);
             const pdfWidth = pdf.internal.pageSize.getWidth();

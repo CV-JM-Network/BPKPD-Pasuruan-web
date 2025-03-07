@@ -35,6 +35,6 @@ function getMutasiPBB($idmutasi_pbb) {
 }
 
 // Contoh penggunaan
-$idmutasi_pbb = 2; // Bisa diganti dengan ID lain
+$idmutasi_pbb = 4; // Bisa diganti dengan ID lain
 header("Content-Type: application/json");
 echo getMutasiPBB($idmutasi_pbb);
